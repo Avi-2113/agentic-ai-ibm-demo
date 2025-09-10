@@ -1,1 +1,38 @@
 
+import requests
+import json
+
+# 🟢 Paste your NEW API key here
+API_KEY = "6296de26-aba6-4a18-851f-a15776d77574"
+
+DEPLOYMENT_ID = "dc3d25a2-7a06-4294-a6de-3e3cce52f9d8"  
+
+REGION = "us-south"
+
+# Build the endpoint
+DEPLOYMENT_URL = f"https://dataplatform.cloud.ibm.com/ml-runtime/spaces/dc3d25a2-7a06-4294-a6de-3e3cce52f9d8/overview?context=wx"
+
+# Headers
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {API_KEY}"
+}
+
+# Example input
+payload = {
+    "input_data": [
+        {
+            "fields": ["text"],
+            "values": [["Hello Watsonx Agent, how are you?"]]
+        }
+    ]
+}
+
+# Call API
+response = requests.post(DEPLOYMENT_URL, headers=headers, json=payload)
+
+print("Status Code:", response.status_code)
+try:
+    print("Response:", json.dumps(response.json(), indent=2))
+except Exception:
+    print("Raw Response:", response.text)
